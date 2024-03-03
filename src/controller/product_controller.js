@@ -15,7 +15,7 @@ const ProductController = {
   fetchAllProducts: async function (req, res) {
     try {
       const products = await ProductModel.find();
-      return res.json({ success: false, data: products });
+      return res.json({ success: true, data: products });
     } catch (ex) {
       return res.json({ success: false, message: ex });
     }
