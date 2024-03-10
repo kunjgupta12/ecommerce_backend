@@ -28,7 +28,8 @@ app.use("/api/cart", CartRoutes);
 
 const OrderRoutes = require("./routes/order_routes");
 app.use("/api/order", OrderRoutes);
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => console.log("server started"));
+app.listen(PORT, () => console.log("server started"));
 
 //user->model,roots & controller

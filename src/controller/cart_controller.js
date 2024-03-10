@@ -18,16 +18,21 @@ const Cartcontroller = {
           data: newCart,
         });
       }
+      ///deleting if exist product
+      const deleteditem = await CartModel.findOneAndUpdate(
+        { user: user, "items.product": product },
+        { $pull: { items: { product: product } } }
+      );
 
       //already exist cart
       const updatedCart = await CartModel.findOneAndUpdate(
         { user: user },
         { $push: { items: { product: product, quantity: quantity } } },
         { new: true }
-      );
+      ).populate('items.product');
       return res.json({
         success: true,
-        data: updatedCart,
+        data: updatedCart.items,
         message: "Product added to cart",
       });
     } catch (ex) {
@@ -43,11 +48,11 @@ const Cartcontroller = {
         },
         { $pull: { items: { product: product } } },
         { new: true }
-      );
+      ).populate('items.product');
 
       return res.json({
         success: true,
-        data: updatedCart,
+        data: updatedCart.items,
         message: "Product removed to cart",
       });
     } catch (ex) {
@@ -57,7 +62,9 @@ const Cartcontroller = {
   getCartForUser: async function (req, res) {
     try {
       const user = req.params.user;
-      const foundCart = await CartModel.findOne({ user: user });
+      const foundCart = await CartModel.findOne({ user: user }).populate(
+        "items.product"
+      );
       if (!foundCart) {
         return res.json({ success: true, data: [] });
       }
