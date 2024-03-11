@@ -4,7 +4,7 @@ const cartItemSchema=new Schema({
     quantity:{type:Number,default:1}
 })
 const cartSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  user: { type: Schema.Types.ObjectId, ref: "User",require:true },
   items:{type:cartItemSchema,default:[]},
   updateOn: { type: Date },
   createdOn: { type: Date },

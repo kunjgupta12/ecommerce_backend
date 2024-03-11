@@ -21,7 +21,9 @@ const Cartcontroller = {
       ///deleting if exist product
       const deleteditem = await CartModel.findOneAndUpdate(
         { user: user, "items.product": product },
-        { $pull: { items: { product: product } } }
+        { $pull: { items: { product: product } } },
+        {new:true
+        }
       );
 
       //already exist cart
